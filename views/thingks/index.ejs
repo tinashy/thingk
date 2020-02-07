@@ -1,0 +1,26 @@
+<%- include ("../partials/header") %>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- creating card with imported data from '/index' route -->
+        <% thingks.forEach((thingk) => { %>
+        <div class="col-md-6 col-lg-4">
+            <div class="card mb-3">
+                <img src="<%= thingk.image %>" class="card-img-top" alt="thingk image">
+                <div class="card-body">
+                    <h5 class="card-title"><%= thingk.name %></h5>
+                    <p class="card-text"><%= thingk.desc.substr(0, 30) %>...</p>
+                    <p class="card-text"><small class="text-muted">$<%= thingk.price %>.00/piece</small>
+                        &nbsp;<button class="btn btn-outline-success btn-sm"><a
+                                href="/thingk/<%= thingk.id %>">more</a></button> &nbsp;
+                        <button class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+        <!-- card ends here -->
+    </div>
+</div>
+
+<%- include ("../partials/footer") %>

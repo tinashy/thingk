@@ -36,7 +36,15 @@ app.get("/", (req, res) => {
 
 //Index Route
 app.get("/thingk", (req, res) => {
-    res.send("thingk index route working!");
+    Thingk.find({}, (err, foundThingks) => {
+        if (err) {
+            console.log("error finding thingks to show: " + err);
+        } else {
+            res.render("thingks/index", {
+                thingks: foundThingks
+            });
+        }
+    });
 });
 
 //Catch-all Route
