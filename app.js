@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 });
 
 //Index Route
-app.get("/thingk", (req, res) => {
+app.get("/thingks", (req, res) => {
     Thingk.find({}, (err, foundThingks) => {
         if (err) {
             console.log("error finding thingks to show: " + err);
