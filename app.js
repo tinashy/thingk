@@ -77,3 +77,5 @@ app.get("*", (req, res) => {
 
 //Listening to routes on local server
 app.listen(port, () => console.log("SERVER STARTED ON PORT: " + port));
+
+//next up is the show route
