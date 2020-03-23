@@ -1,5 +1,15 @@
 <%- include ("../partials/header") %>
 
+    <div class="container-fluid p-0">
+        <div class="jumbotron">
+            <h1>Welcome To ThinGK</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore minima animi quasi natus minus beatae
+                aliquam eligendi consectetur impedit pariatur!</p>
+            <hr>
+
+        </div>
+    </div>
+
 <div class="container-fluid">
     <div class="row">
         <!-- creating card with imported data from '/index' route -->
@@ -9,7 +19,7 @@
                 <img src="<%= thingk.image %>" class="card-img-top" alt="thingk image">
                 <div class="card-body">
                     <h5 class="card-title"><%= thingk.name %></h5>
-                    <p class="card-text"><%= thingk.desc.substr(0, 30) %>...</p>
+                    <p class="card-text"><%= thingk.desc.substr(0, 60) %>...</p>
                     <p class="card-text"><small class="text-muted">$<%= thingk.price %>.00/piece</small>
                         &nbsp;<button class="btn btn-outline-success btn-sm"><a
                                 href="/thingk/<%= thingk.id %>">more</a></button> &nbsp;

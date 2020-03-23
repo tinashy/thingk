@@ -47,6 +47,29 @@ app.get("/thingks", (req, res) => {
     });
 });
 
+//New Route
+app.get("/thingks/new", (req, res) => {
+    res.render("thingks/new");
+});
+
+//Create Route
+app.post("/thingks", (req, res) => {
+    let newProduct = {
+        name: req.body.thingk.name,
+        image: req.body.thingk.image,
+        desc: req.body.thingk.desc,
+        price: Number(req.body.thingk.price)
+    }
+
+    Thingk.create(newProduct, (err, createdThingk) => {
+        if(err) {
+            console.log("Error creating new product: " + err);
+        } else {
+            res.redirect("/thingks");
+        }
+    })
+});
+
 //Catch-all Route
 app.get("*", (req, res) => {
     res.send("PAGE NOT FOUND... WHAT ARE YOU DOING WITH YOUR LIFE!");

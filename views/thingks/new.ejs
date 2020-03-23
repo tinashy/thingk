@@ -1,0 +1,50 @@
+<%- include ("../partials/header") %>
+
+<div class="container contact">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="contact-info">
+        <ion-icon name="pencil-outline" class="new-icon"></ion-icon>
+        <h2>Create Product</h2>
+        <h5>one more into the fray, a dollar more into the tray!</h5>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <form action="/thingks" method="POST">
+        <div class="contact-form">
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="fname">Product Title:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="thingk[name]" placeholder="Enter Product Title">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="lname">Image url:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Enter product image url" name="thingk[image]">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="email">Price:</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control" placeholder="Enter product price" name="thingk[price]">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="comment">Product Description:</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" rows="5" name="thingk[desc]"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include ("../partials/footer") %>
