@@ -18,7 +18,7 @@ html {
   margin-top: 20px;
 }
 
-/* ------------- NEW THINGK ------------------ */
+/* ------------- CREATE NEW THINGK ------------------ */
 .new-icon {
   font-size: 150%;
   color: #fff;
@@ -74,4 +74,9 @@ html {
 
 .contact-form button:focus {
   box-shadow: none;
+}
+
+/* ------------------- SHOW THINGK ------------------------ */
+.show-wrapper {
+  padding: 1%;
 }

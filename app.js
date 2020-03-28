@@ -70,6 +70,19 @@ app.post("/thingks", (req, res) => {
     })
 });
 
+//Show Route
+app.get("/thingks/:id", (req, res) => {
+    Thingk.findById(req.params.id, (err, foundThingk) => {
+        if(err) {
+            console.log("Error finding thingk to show: " + err);
+        } else {
+            res.render("thingks/show", {
+                thingk: foundThingk
+            });
+        }
+    })
+});
+
 //Catch-all Route
 app.get("*", (req, res) => {
     res.send("PAGE NOT FOUND... WHAT ARE YOU DOING WITH YOUR LIFE!");
@@ -78,4 +91,4 @@ app.get("*", (req, res) => {
 //Listening to routes on local server
 app.listen(port, () => console.log("SERVER STARTED ON PORT: " + port));
 
-//next up is the show route
+//next up is destroy routes

@@ -5,6 +5,7 @@ let ThingkSchema = new mongoose.Schema({
     image: String,
     desc: String,
     price: Number,
+    externalUrl: String,
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
