@@ -85,6 +85,30 @@ app.get("/thingks/:id", (req, res) => {
     })
 });
 
+//Edit Route
+app.get("/thingks/:id/edit", (req, res) => {
+    Thingk.findById(req.params.id, (err, foundThingk) => {
+        if(err) {
+            console.log("Error finding thingk to edit: " + err);
+        } else {
+            res.render("thingks/edit", {
+                thingk: foundThingk
+            });
+        }
+    });
+});
+
+//Update Route
+app.put("/thingks/:id", (req, res) => {
+    Thingk.findByIdAndUpdate(req.params.id, req.body.thingk, (err, updatedThingk) => {
+        if(err) {
+            console.log("Error updating thingk: " + err);
+        } else {
+            res.redirect("/thingks/" + req.params.id);
+        }
+    });
+});
+
 //Destroy Route
 app.delete("/thingks/:id", (req, res) => {
     Thingk.findByIdAndDelete(req.params.id, (err, deletedThingk) => {
