@@ -10,12 +10,87 @@ html {
   font-weight: 300;
   text-rendering: optimizeLegibility;
   font-family: 'Lato', sans-serif;
+  color: #5f4723
+}
+
+.lrow {
+  max-width: 1140px;
+  margin: 0 auto;
 }
 
 /* ------------- NAVIGATION ------------------ */
+
+
 .logo-icon {
   font-size: 180%;
   margin-top: 20px;
+}
+
+/* ----------- HEADER ----------- */
+
+header {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../img/hero-image1.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+}
+
+.hero-text-box {
+  position: absolute;
+  width: 1140px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+h1 {
+  margin: 0;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 300;
+  line-height: 140%;
+  letter-spacing: 1px;
+  word-spacing: 4px;
+  margin-bottom: 20px;
+}
+
+/* ----- header buttons ---------- */
+.btn:link,
+.btn:visited {
+  display: inline-block;
+  padding: 10px 30px;
+  text-decoration: none;
+  margin-right: 15px;
+  color: #fff;
+  border-radius: 200px;
+}
+
+.btn-full:link,
+.btn-full:visited {
+  border: 1px solid #F44336;
+  background-color: #184743;
+  color: #F44336;
+}
+
+.btn-ghost:link,
+.btn-ghost:visited {
+  border: 1px solid #F44336;
+  color: #ff4444;
+}
+
+
+.btn-full:active,
+.btn-full:hover {
+  background-color: #ff4444;
+  color: #fff;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-ghost:active,
+.btn-ghost:hover {
+  border: 1px solid #1d521d;
+  background-color: #1d524c;
+  transition: background-color 0.2s;
 }
 
 /* ------------- CREATE NEW THINGK ------------------ */
