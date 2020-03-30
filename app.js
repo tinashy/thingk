@@ -4,6 +4,7 @@ let express = require("express"),
     Thingk = require("./models/thingk"),
     Comment = require("./models/comment"),
     seedDB = require("./seeds"),
+    methodOverride = require("method-override"),
     port = 8080;
 
 let app = express();
@@ -20,6 +21,7 @@ mongoose.connect("mongodb://localhost:27017/thingk", {
 
 //expecting files from the '/public' dir automatically
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 //body-parser
 app.use(
     bodyParser.urlencoded({
@@ -81,6 +83,18 @@ app.get("/thingks/:id", (req, res) => {
             });
         }
     })
+});
+
+//Destroy Route
+app.delete("/thingks/:id", (req, res) => {
+    Thingk.findByIdAndDelete(req.params.id, (err, deletedThingk) => {
+        if(err) {
+            console.log("Error deleting thingk: " + err);
+        } else {
+            console.log(deletedThingk);
+            res.redirect("/thingks");
+        }
+    });
 });
 
 //Catch-all Route

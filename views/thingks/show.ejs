@@ -18,7 +18,10 @@
         <p class="card-text"><%= thingk.desc %></p>
         <p class="card-text text-danger">
           <small>Price $<%= thingk.price %>.00/unit</small>
-          &nbsp;&nbsp;|&nbsp;<a href="/thingks/<%= thingk.id %>/edit">edit</a>&nbsp;|&nbsp;<a href="#">delete</a>&nbsp;|&nbsp;<a href="<%= thingk.externalUrl %>" target="_blank">go to source</a>
+          &nbsp;&nbsp;|&nbsp;<a href="/thingks/<%= thingk.id %>/edit">edit</a>&nbsp;|&nbsp;<a href="<%= thingk.externalUrl %>" target="_blank">go to source</a>
+          <form class="delete-form" action="/thingks/<%= thingk.id %>?_method=DELETE" method="POST">
+            <button class="btn btn-sm btn-outline-danger">delete</button>
+          </form>
         </p>
       </div>
     </div>

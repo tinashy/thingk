@@ -80,3 +80,7 @@ html {
 .show-wrapper {
   padding: 1%;
 }
+
+.delete-form {
+  display: inline;
+}
