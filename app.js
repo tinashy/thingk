@@ -74,7 +74,7 @@ app.post("/thingks", (req, res) => {
 
 //Show Route
 app.get("/thingks/:id", (req, res) => {
-    Thingk.findById(req.params.id, (err, foundThingk) => {
+    Thingk.findById(req.params.id).populate("comments").exec((err, foundThingk) => {
         if(err) {
             console.log("Error finding thingk to show: " + err);
         } else {
@@ -82,7 +82,7 @@ app.get("/thingks/:id", (req, res) => {
                 thingk: foundThingk
             });
         }
-    })
+    });
 });
 
 //Edit Route
