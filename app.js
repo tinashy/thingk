@@ -54,6 +54,8 @@ app.get("/", (req, res) => {
     res.render("landing");
 });
 
+/* ------------------------------- THINGK ROUTES ------------------------------------------- */
+
 //Index Route
 app.get("/thingks", (req, res) => {
     Thingk.find({}, (err, foundThingks) => {
@@ -139,6 +141,8 @@ app.delete("/thingks/:id", (req, res) => {
     });
 });
 
+/* ----------------------- COMMENT ROUTES ---------------------------- */
+
 //Comment New Route
 app.get("/thingks/:id/comments/new", (req, res) => {
     Thingk.findById(req.params.id, (err, foundThingk) => {
@@ -175,6 +179,9 @@ app.post("/thingks/:id/comments", (req, res) => {
         }
     });
 });
+
+//---------------------------------- Auth Routes -------------------------------
+
 
 //Catch-all Route
 app.get("*", (req, res) => {
