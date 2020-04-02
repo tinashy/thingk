@@ -3,8 +3,12 @@ let express = require("express"),
     mongoose = require("mongoose"),
     Thingk = require("./models/thingk"),
     Comment = require("./models/comment"),
+    User = require("./models/user"),
     seedDB = require("./seeds"),
     methodOverride = require("method-override"),
+    passport = require("passport"),
+    LocalStrategy = require("passport-local"),
+    LocalStrategyMongoose = require("passport-local-mongoose"),
     port = 8080;
 
 let app = express();
@@ -21,6 +25,7 @@ mongoose.connect("mongodb://localhost:27017/thingk", {
 
 //expecting files from the '/public' dir automatically
 app.use(express.static(__dirname + "/public"));
+//method-override
 app.use(methodOverride("_method"));
 //body-parser
 app.use(
@@ -30,6 +35,19 @@ app.use(
 );
 //setting view engine to EJS
 app.set("view engine", "ejs");
+
+//---------- Express-session & Passport Setup ----------------
+app.use(require("express-session")({
+    secret: "we all need a little validation :)",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //Initial Route
 app.get("/", (req, res) => {
@@ -144,8 +162,6 @@ app.post("/thingks/:id/comments", (req, res) => {
                 if(err) {
                     console.log("Error creating comment: " + err);
                 } else {
-                    console.log(createdComment);
-                    console.log("=======================");
                     foundThingk.comments.push(createdComment);
                     foundThingk.save((err, data) => {
                         if(err) {
