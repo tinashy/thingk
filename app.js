@@ -46,6 +46,7 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -181,7 +182,41 @@ app.post("/thingks/:id/comments", (req, res) => {
 });
 
 //---------------------------------- Auth Routes -------------------------------
+//new user routes
+app.get("/signup", (req, res) => {
+    res.render("signup");
+});
 
+app.post("/signup", (req, res) => {
+    User.register(new User({username: req.body.username}), req.body.password, (err, createdUser) => {
+        if(err) {
+            console.log("Error creating new user: " + err);
+        } else {
+            passport.authenticate("local")(req, res, () => {
+                console.log(createdUser);
+                res.redirect("/thingks");
+            });
+        }
+    });
+});
+
+//login routes
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+
+app.post("/login",passport.authenticate("local", {
+    successRedirect: "/thingks",
+    failureRedirect: "/login"
+}), (req, res) => {
+
+});
+
+//logout route
+app.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect("/login");
+});
 
 //Catch-all Route
 app.get("*", (req, res) => {
