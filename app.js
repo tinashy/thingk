@@ -56,6 +56,7 @@ app.use((req, res, next) => {
     next();
 });
 
+//------------------ requiring ROUTES ------------------------
 const thingks = require("./routes/thingks");
 const comments = require("./routes/comments");
 const index = require("./routes/index");
@@ -67,4 +68,4 @@ app.use(index);
 //Listening to routes on local server
 app.listen(port, () => console.log("SERVER STARTED ON PORT: " + port));
 
-//next up is destroy routes
+//next up Data Association
