@@ -50,184 +50,19 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//Current Session logs
+//Passing current user to all res.locals
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     next();
 });
 
-//Initial Route
-app.get("/", (req, res) => {
-    res.render("landing");
-});
+const thingks = require("./routes/thingks");
+const comments = require("./routes/comments");
+const index = require("./routes/index");
 
-/* ------------------------------- THINGK ROUTES ------------------------------------------- */
-
-//Index Route
-app.get("/thingks", (req, res) => {
-    Thingk.find({}, (err, foundThingks) => {
-        if (err) {
-            console.log("error finding thingks to show: " + err);
-        } else {
-            res.render("thingks/index", {
-                thingks: foundThingks
-            });
-        }
-    });
-});
-
-//New Route
-app.get("/thingks/new", (req, res) => {
-    res.render("thingks/new");
-});
-
-//Create Route
-app.post("/thingks", (req, res) => {
-    let newProduct = {
-        name: req.body.thingk.name,
-        image: req.body.thingk.image,
-        desc: req.body.thingk.desc,
-        price: Number(req.body.thingk.price)
-    }
-
-    Thingk.create(newProduct, (err, createdThingk) => {
-        if(err) {
-            console.log("Error creating new product: " + err);
-        } else {
-            res.redirect("/thingks");
-        }
-    })
-});
-
-//Show Route
-app.get("/thingks/:id", (req, res) => {
-    Thingk.findById(req.params.id).populate("comments").exec((err, foundThingk) => {
-        if(err) {
-            console.log("Error finding thingk to show: " + err);
-        } else {
-            res.render("thingks/show", {
-                thingk: foundThingk
-            });
-        }
-    });
-});
-
-//Edit Route
-app.get("/thingks/:id/edit", (req, res) => {
-    Thingk.findById(req.params.id, (err, foundThingk) => {
-        if(err) {
-            console.log("Error finding thingk to edit: " + err);
-        } else {
-            res.render("thingks/edit", {
-                thingk: foundThingk
-            });
-        }
-    });
-});
-
-//Update Route
-app.put("/thingks/:id", (req, res) => {
-    Thingk.findByIdAndUpdate(req.params.id, req.body.thingk, (err, updatedThingk) => {
-        if(err) {
-            console.log("Error updating thingk: " + err);
-        } else {
-            res.redirect("/thingks/" + req.params.id);
-        }
-    });
-});
-
-//Destroy Route
-app.delete("/thingks/:id", (req, res) => {
-    Thingk.findByIdAndDelete(req.params.id, (err, deletedThingk) => {
-        if(err) {
-            console.log("Error deleting thingk: " + err);
-        } else {
-            console.log(deletedThingk);
-            res.redirect("/thingks");
-        }
-    });
-});
-
-/* ----------------------- COMMENT ROUTES ---------------------------- */
-
-//Comment New Route
-app.get("/thingks/:id/comments/new", (req, res) => {
-    Thingk.findById(req.params.id, (err, foundThingk) => {
-        if(err) {
-            console.log("Error finding thingk to comment on: " + err);
-        } else {
-            res.render("comments/new", {
-                thingk: foundThingk
-            });
-        }
-    });
-});
-
-//Comment Create Route
-app.post("/thingks/:id/comments", (req, res) => {
-    Thingk.findById(req.params.id, (err, foundThingk) => {
-        if(err) {
-            console.log("Error finding thingk to comment on: " + err); 
-        } else {
-            Comment.create(req.body.comment, (err, createdComment) => {
-                if(err) {
-                    console.log("Error creating comment: " + err);
-                } else {
-                    foundThingk.comments.push(createdComment);
-                    foundThingk.save((err, data) => {
-                        if(err) {
-                            console.log("Error saving new thingk with comment: " + err);
-                        } else {
-                            res.redirect("/thingks/" + req.params.id);
-                        }
-                    });
-                }
-            });
-        }
-    });
-});
-
-//---------------------------------- Auth Routes -------------------------------
-//new user routes
-app.get("/signup", (req, res) => {
-    res.render("signup");
-});
-
-app.post("/signup", (req, res) => {
-    User.register(new User({username: req.body.username}), req.body.password, (err, createdUser) => {
-        if(err) {
-            console.log("Error creating new user: " + err);
-        } else {
-            passport.authenticate("local")(req, res, () => {
-                console.log(createdUser);
-                res.redirect("/thingks");
-            });
-        }
-    });
-});
-
-//login routes
-app.get("/login", (req, res) => {
-    res.render("login");
-});
-
-app.post("/login",passport.authenticate("local", {
-    successRedirect: "/thingks",
-    failureRedirect: "/login"
-}), (req, res) => {
-
-});
-
-//logout route
-app.get("/logout", (req, res) => {
-    req.logout();
-    res.redirect("/login");
-});
-
-//Catch-all Route
-app.get("*", (req, res) => {
-    res.send("PAGE NOT FOUND... WHAT ARE YOU DOING WITH YOUR LIFE!");
-});
+app.use(thingks);
+app.use(comments);
+app.use(index);
 
 //Listening to routes on local server
 app.listen(port, () => console.log("SERVER STARTED ON PORT: " + port));
