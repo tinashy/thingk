@@ -1,2 +1,2 @@
 # thingk
-dropshipping app with RESTful API
+dropshipping app with REST API
