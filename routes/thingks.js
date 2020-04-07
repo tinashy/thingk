@@ -29,7 +29,11 @@ router.post("/",isLoggedIn, (req, res) => {
     name: req.body.thingk.name,
     image: req.body.thingk.image,
     desc: req.body.thingk.desc,
-    price: Number(req.body.thingk.price)
+    price: Number(req.body.thingk.price),
+    author: {
+      id: req.user._id,
+      username: req.user.username
+    }
   }
 
   Thingk.create(newProduct, (err, createdThingk) => {
