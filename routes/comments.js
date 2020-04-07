@@ -7,7 +7,7 @@ const Comment = require("../models/comment");
 /* ----------------------- COMMENT ROUTES ---------------------------- */
 
 //Comment New Route
-router.get("/new", (req, res) => {
+router.get("/new",isLoggedIn, (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if (err) {
       console.log("Error finding thingk to comment on: " + err);
@@ -20,7 +20,7 @@ router.get("/new", (req, res) => {
 });
 
 //Comment Create Route
-router.post("/", (req, res) => {
+router.post("/",isLoggedIn, (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if (err) {
       console.log("Error finding thingk to comment on: " + err);
@@ -42,5 +42,13 @@ router.post("/", (req, res) => {
     }
   });
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.send("You need to be logged in to do that!");
+  }
+}
 
 module.exports = router;

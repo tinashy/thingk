@@ -19,12 +19,12 @@ router.get("/", (req, res) => {
 });
 
 //New Route
-router.get("/new", (req, res) => {
+router.get("/new",isLoggedIn, (req, res) => {
   res.render("thingks/new");
 });
 
 //Create Route
-router.post("/", (req, res) => {
+router.post("/",isLoggedIn, (req, res) => {
   let newProduct = {
     name: req.body.thingk.name,
     image: req.body.thingk.image,
@@ -55,7 +55,7 @@ router.get("/:id", (req, res) => {
 });
 
 //Edit Route
-router.get("/:id/edit", (req, res) => {
+router.get("/:id/edit",isLoggedIn, (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if (err) {
       console.log("Error finding thingk to edit: " + err);
@@ -68,7 +68,7 @@ router.get("/:id/edit", (req, res) => {
 });
 
 //Update Route
-router.put("/:id", (req, res) => {
+router.put("/:id",isLoggedIn, (req, res) => {
   Thingk.findByIdAndUpdate(req.params.id, req.body.thingk, (err, updatedThingk) => {
     if (err) {
       console.log("Error updating thingk: " + err);
@@ -79,7 +79,7 @@ router.put("/:id", (req, res) => {
 });
 
 //Destroy Route
-router.delete("/:id", (req, res) => {
+router.delete("/:id",isLoggedIn, (req, res) => {
   Thingk.findByIdAndDelete(req.params.id, (err, deletedThingk) => {
     if (err) {
       console.log("Error deleting thingk: " + err);
@@ -89,5 +89,13 @@ router.delete("/:id", (req, res) => {
     }
   });
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.send("You need to be logged in to do that!");
+  }
+}
 
 module.exports = router;

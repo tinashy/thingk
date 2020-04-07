@@ -53,5 +53,13 @@ router.get("*", (req, res) => {
   res.send("PAGE NOT FOUND... WHAT ARE YOU DOING WITH YOUR LIFE!");
 });
 
+function isLoggedIn (req, res, next) {
+  if(req.isAuthenticated()) {
+    next();
+  } else {
+    res.send("You need to be logged in to do that!");
+  }
+}
+
 
 module.exports = router;
