@@ -25,7 +25,14 @@ router.post("/",isLoggedIn, (req, res) => {
     if (err) {
       console.log("Error finding thingk to comment on: " + err);
     } else {
-      Comment.create(req.body.comment, (err, createdComment) => {
+      let comment = {
+        author: {
+          id: req.user._id,
+          username: req.user.username
+        },
+        text: req.body.comment.text
+      }
+      Comment.create(comment, (err, createdComment) => {
         if (err) {
           console.log("Error creating comment: " + err);
         } else {
@@ -34,6 +41,7 @@ router.post("/",isLoggedIn, (req, res) => {
             if (err) {
               console.log("Error saving new thingk with comment: " + err);
             } else {
+              console.log(createdComment);
               res.redirect("/thingks/" + req.params.id);
             }
           });

@@ -32,7 +32,7 @@
       </div>
       <div class="card-body">
         <% thingk.comments.forEach((comment) => { %>
-          <h6 class="card-title"><%= comment.username %> - <small><%= comment.text %></small></h6>
+          <h6 class="card-title"><%= comment.author.username %> - <small><%= comment.text %></small></h6>
           <button class="btn btn-sm btn-warning"><a href="/thingks/<%= thingk.id %>/comments/<%= comment.id %>/edit">edit</a></button>
           <form style="display: inline;" action="/thingks/<%= thingk.id %>/comments/<%= comment.id %>?_method=DELETE"><button class="btn btn-sm btn-danger">delete</button></form>
         <% }) %>
