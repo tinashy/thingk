@@ -6,6 +6,13 @@ let ThingkSchema = new mongoose.Schema({
     desc: String,
     price: Number,
     externalUrl: String,
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String
+    },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
