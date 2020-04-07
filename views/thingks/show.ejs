@@ -17,13 +17,23 @@
         <h5 class="card-title"><%= thingk.name %></h5>
         <p class="card-text"><%= thingk.desc %></p>
         <p class="card-text text-danger">
-          <small>Price $<%= thingk.price %>.00/unit</small>
-          &nbsp;&nbsp;|&nbsp;<a href="/thingks/<%= thingk.id %>/edit">edit</a>&nbsp;|&nbsp;<a
-            href="<%= thingk.externalUrl %>" target="_blank">go to source</a>&nbsp;|&nbsp;<small class="float-right">posted by
-            <em><%= thingk.author.username %></em></small>
+          <small>Price $<%= thingk.price %>.00/unit</small>&nbsp;
+          <small class="float-right">posted by
+            <em><%= thingk.author.username %></em>
+          </small>
+
+          <!-- dynamically showing & hiding buttons depending on user authorization -->
+          <% if(currentUser && currentUser._id.equals(thingk.author.id)) { %>
+          &nbsp;|&nbsp;<a href="/thingks/<%= thingk.id %>/edit">edit</a>
+          
+          &nbsp;|&nbsp;<a href="<%= thingk.externalUrl %>" target="_blank">go to source</a>
+
           <form class="delete-form" action="/thingks/<%= thingk.id %>?_method=DELETE" method="POST">
             <button class="btn btn-sm btn-outline-danger">delete</button>
           </form>
+
+          <% } %>
+
           <a href="/thingks/<%= thingk.id %>/comments/new"><button class="btn btn-sm btn-outline-primary">Comment</button></a>
         </p>
       </div>
