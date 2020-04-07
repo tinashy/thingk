@@ -7,7 +7,7 @@ const Comment = require("../models/comment");
 /* ----------------------- COMMENT ROUTES ---------------------------- */
 
 //Comment New Route
-router.get("/thingks/:id/comments/new", (req, res) => {
+router.get("/new", (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if (err) {
       console.log("Error finding thingk to comment on: " + err);
@@ -20,7 +20,7 @@ router.get("/thingks/:id/comments/new", (req, res) => {
 });
 
 //Comment Create Route
-router.post("/thingks/:id/comments", (req, res) => {
+router.post("/", (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if (err) {
       console.log("Error finding thingk to comment on: " + err);

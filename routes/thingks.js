@@ -6,7 +6,7 @@ const Thingk = require("../models/thingk");
 /* ------------------------------- THINGK ROUTES ------------------------------------------- */
 
 //Index Route
-router.get("/thingks", (req, res) => {
+router.get("/", (req, res) => {
   Thingk.find({}, (err, foundThingks) => {
     if (err) {
       console.log("error finding thingks to show: " + err);
@@ -19,12 +19,12 @@ router.get("/thingks", (req, res) => {
 });
 
 //New Route
-router.get("/thingks/new", (req, res) => {
+router.get("/new", (req, res) => {
   res.render("thingks/new");
 });
 
 //Create Route
-router.post("/thingks", (req, res) => {
+router.post("/", (req, res) => {
   let newProduct = {
     name: req.body.thingk.name,
     image: req.body.thingk.image,
@@ -42,7 +42,7 @@ router.post("/thingks", (req, res) => {
 });
 
 //Show Route
-router.get("/thingks/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   Thingk.findById(req.params.id).populate("comments").exec((err, foundThingk) => {
     if (err) {
       console.log("Error finding thingk to show: " + err);
@@ -55,7 +55,7 @@ router.get("/thingks/:id", (req, res) => {
 });
 
 //Edit Route
-router.get("/thingks/:id/edit", (req, res) => {
+router.get("/:id/edit", (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if (err) {
       console.log("Error finding thingk to edit: " + err);
@@ -68,7 +68,7 @@ router.get("/thingks/:id/edit", (req, res) => {
 });
 
 //Update Route
-router.put("/thingks/:id", (req, res) => {
+router.put("/:id", (req, res) => {
   Thingk.findByIdAndUpdate(req.params.id, req.body.thingk, (err, updatedThingk) => {
     if (err) {
       console.log("Error updating thingk: " + err);
@@ -79,7 +79,7 @@ router.put("/thingks/:id", (req, res) => {
 });
 
 //Destroy Route
-router.delete("/thingks/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   Thingk.findByIdAndDelete(req.params.id, (err, deletedThingk) => {
     if (err) {
       console.log("Error deleting thingk: " + err);

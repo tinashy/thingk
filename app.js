@@ -61,8 +61,8 @@ const thingks = require("./routes/thingks");
 const comments = require("./routes/comments");
 const index = require("./routes/index");
 
-app.use(thingks);
-app.use(comments);
+app.use("/thingks",thingks);
+app.use("/thingks/:id/comments",comments);
 app.use(index);
 
 //Listening to routes on local server
