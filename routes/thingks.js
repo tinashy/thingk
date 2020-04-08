@@ -9,7 +9,8 @@ const Thingk = require("../models/thingk");
 router.get("/", (req, res) => {
   Thingk.find({}, (err, foundThingks) => {
     if (err) {
-      console.log("error finding thingks to show: " + err);
+      req.flash("error", "Error finding thingks to show");
+      res.redirect("back");
     } else {
       res.render("thingks/index", {
         thingks: foundThingks
@@ -38,8 +39,10 @@ router.post("/",isLoggedIn, (req, res) => {
 
   Thingk.create(newProduct, (err, createdThingk) => {
     if (err) {
-      console.log("Error creating new product: " + err);
+      req.flash("error", "Error creating new product");
+      res.redirect("back");
     } else {
+      req.flash("success", "thinGK created :)");
       res.redirect("/thingks");
     }
   })
@@ -49,7 +52,8 @@ router.post("/",isLoggedIn, (req, res) => {
 router.get("/:id", (req, res) => {
   Thingk.findById(req.params.id).populate("comments").exec((err, foundThingk) => {
     if (err) {
-      console.log("Error finding thingk to show: " + err);
+      req.flash("error", "Error finding thingk to show");
+      res.redirect("back");
     } else {
       res.render("thingks/show", {
         thingk: foundThingk
@@ -62,7 +66,8 @@ router.get("/:id", (req, res) => {
 router.get("/:id/edit",checkThingkOwnership, (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if (err) {
-      console.log("Error finding thingk to edit: " + err);
+      req.flash("error", "Error finding thingk to edit");
+      res.redirect("back");
     } else {
       res.render("thingks/edit", {
         thingk: foundThingk
@@ -75,8 +80,10 @@ router.get("/:id/edit",checkThingkOwnership, (req, res) => {
 router.put("/:id",checkThingkOwnership, (req, res) => {
   Thingk.findByIdAndUpdate(req.params.id, req.body.thingk, (err, updatedThingk) => {
     if (err) {
-      console.log("Error updating thingk: " + err);
+      req.flash("error", "Error updating thingk :(");
+      res.redirect("back");
     } else {
+      req.flash("success", "thinGK updated :)");
       res.redirect("/thingks/" + req.params.id);
     }
   });
@@ -86,9 +93,10 @@ router.put("/:id",checkThingkOwnership, (req, res) => {
 router.delete("/:id",checkThingkOwnership, (req, res) => {
   Thingk.findByIdAndDelete(req.params.id, (err, deletedThingk) => {
     if (err) {
-      console.log("Error deleting thingk: " + err);
+      req.flash("error", "Error deleting thinGK");
+      res.redirect("back");
     } else {
-      console.log(deletedThingk);
+      req.flash("success", "ThinGK deleted :)");
       res.redirect("/thingks");
     }
   });
@@ -107,17 +115,20 @@ function checkThingkOwnership (req, res, next) {
   if(req.isAuthenticated()) {
     Thingk.findById(req.params.id, (err, foundThingk) => {
       if(err) {
-        console.log("Error finding thingk: " + err);
+        req.flash("error", "Error finding thingk");
+        res.redirect("back");
       } else {
         if(req.user._id.equals(foundThingk.author.id)) {
           next();
         } else {
-          res.send("You don't have authorization to do that!");
+          req.flash("error", "You don't have authorization to do that :(");
+          res.redirect("back");
         }
       }
     })
   } else {
-    res.send("You need to be logged in to do that!");
+    req.flash("error", "You need to be logged in to do that :(");
+    res.redirect("/login");
   }
 }
 
