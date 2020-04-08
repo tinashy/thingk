@@ -102,15 +102,6 @@ router.delete("/:id",checkThingkOwnership, (req, res) => {
   });
 });
 
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    req.flash("error", "You need to be logged in to do that :(");
-    res.redirect("back");
-  }
-}
-
 //Middleware to check thingk ownership
 function checkThingkOwnership (req, res, next) {
   if(req.isAuthenticated()) {
@@ -127,6 +118,15 @@ function checkThingkOwnership (req, res, next) {
         }
       }
     })
+  } else {
+    req.flash("error", "You need to be logged in to do that :(");
+    res.redirect("/login");
+  }
+}
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
   } else {
     req.flash("error", "You need to be logged in to do that :(");
     res.redirect("/login");
