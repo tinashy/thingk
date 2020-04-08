@@ -9,6 +9,7 @@ let express = require("express"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     LocalStrategyMongoose = require("passport-local-mongoose"),
+    flash = require("connect-flash"),
     port = 8080;
 
 let app = express();
@@ -35,6 +36,7 @@ app.use(
 );
 //setting view engine to EJS
 app.set("view engine", "ejs");
+app.use(flash());
 
 //---------- Express-session & Passport Setup ----------------
 app.use(require("express-session")({
@@ -53,6 +55,8 @@ passport.deserializeUser(User.deserializeUser());
 //Passing current user to all res.locals
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 

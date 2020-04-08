@@ -20,10 +20,11 @@ router.post("/signup", (req, res) => {
     username: req.body.username
   }), req.body.password, (err, createdUser) => {
     if (err) {
-      console.log("Error creating new user: " + err);
+      req.flash("error", err.message);
+      res.redirect("/signup");
     } else {
       passport.authenticate("local")(req, res, () => {
-        console.log(createdUser);
+        req.flash("success", "Welcome to ThinGKs " + createdUser.username);
         res.redirect("/thingks");
       });
     }
@@ -32,18 +33,22 @@ router.post("/signup", (req, res) => {
 
 //login routes
 router.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login", {
+    message: req.flash("error", res.error)
+  });
 });
 
 router.post("/login", passport.authenticate("local", {
   successRedirect: "/thingks",
-  failureRedirect: "/login"
+  failureRedirect: "/login",
+  failureFlash: true
 }), (req, res) => {
 
 });
 
 //logout route
 router.get("/logout", (req, res) => {
+  req.flash("success", "See you next time " + req.user.username + "!");
   req.logout();
   res.redirect("/login");
 });
