@@ -10,7 +10,8 @@ const Comment = require("../models/comment");
 router.get("/new",isLoggedIn, (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if (err) {
-      console.log("Error finding thingk to comment on: " + err);
+      req.flash("error", "Error finding thingk to comment on");
+      res.redirect("back");
     } else {
       res.render("comments/new", {
         thingk: foundThingk
@@ -23,7 +24,8 @@ router.get("/new",isLoggedIn, (req, res) => {
 router.post("/",isLoggedIn, (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if (err) {
-      console.log("Error finding thingk to comment on: " + err);
+      req.flash("error", "Error finding thingk to comment on");
+      res.redirect("back");
     } else {
       let comment = {
         author: {
@@ -34,14 +36,16 @@ router.post("/",isLoggedIn, (req, res) => {
       }
       Comment.create(comment, (err, createdComment) => {
         if (err) {
-          console.log("Error creating comment: " + err);
+          req.flash("error", "Error creating comment");
+          res.redirect("back");
         } else {
           foundThingk.comments.push(createdComment);
           foundThingk.save((err, data) => {
             if (err) {
-              console.log("Error saving new thingk with comment: " + err);
+              req.flash("error", "Error saving new thingk with comment");
+              res.redirect("back");
             } else {
-              console.log(createdComment);
+              req.flash("success", "Comment created :)");
               res.redirect("/thingks/" + req.params.id);
             }
           });
@@ -55,11 +59,13 @@ router.post("/",isLoggedIn, (req, res) => {
 router.get("/:comment_id/edit",checkCommentOwnership, (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if(err) {
-      console.log("Error finding thingk: " + err);
+      req.flash("error", "Error finding thingk to comment on");
+      res.redirect("back");
     } else {
       Comment.findById(req.params.comment_id, (err, foundComment) => {
         if (err) {
-          console.log("Error finding comment: " + err);
+          req.flash("error", "Error finding comment");
+          res.redirect("back");
         } else {
           res.render("comments/edit", {
             comment: foundComment,
@@ -75,8 +81,10 @@ router.get("/:comment_id/edit",checkCommentOwnership, (req, res) => {
 router.put("/:comment_id",checkCommentOwnership, (req, res) => {
   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
     if(err) {
-      console.log("Error updating comment: " + err);
+      req.flash("error", "Error updating comment");
+      res.redirect("back");
     } else {
+      req.flash("success", "Comment updated :)");
       res.redirect("/thingks/" + req.params.id);
     }
   });
@@ -87,17 +95,20 @@ function checkCommentOwnership (req, res, next) {
   if(req.isAuthenticated()) {
     Comment.findById(req.params.comment_id, (err, foundComment) => {
       if(err) {
-        console.log("Error finding comment: " + err);
+        req.flash("error", "Error finding comment");
+        res.redirect("back");
       } else {
         if(req.user._id.equals(foundComment.author.id)) {
           next();
         } else {
-          res.send("You don't have authorization to do that");
+          req.flash("error", "You don't have authorization to do that");
+          res.redirect("back");
         }
       }
     });
   } else {
-    res.send("You need to be logged in to do that");
+    req.flash("error", "You need to be logged in to do that :(");
+    res.redirect("/login");
   }
 }
 
