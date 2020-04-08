@@ -59,7 +59,7 @@ router.get("/:id", (req, res) => {
 });
 
 //Edit Route
-router.get("/:id/edit",isLoggedIn, (req, res) => {
+router.get("/:id/edit",checkThingkOwnership, (req, res) => {
   Thingk.findById(req.params.id, (err, foundThingk) => {
     if (err) {
       console.log("Error finding thingk to edit: " + err);
@@ -72,7 +72,7 @@ router.get("/:id/edit",isLoggedIn, (req, res) => {
 });
 
 //Update Route
-router.put("/:id",isLoggedIn, (req, res) => {
+router.put("/:id",checkThingkOwnership, (req, res) => {
   Thingk.findByIdAndUpdate(req.params.id, req.body.thingk, (err, updatedThingk) => {
     if (err) {
       console.log("Error updating thingk: " + err);
@@ -83,7 +83,7 @@ router.put("/:id",isLoggedIn, (req, res) => {
 });
 
 //Destroy Route
-router.delete("/:id",isLoggedIn, (req, res) => {
+router.delete("/:id",checkThingkOwnership, (req, res) => {
   Thingk.findByIdAndDelete(req.params.id, (err, deletedThingk) => {
     if (err) {
       console.log("Error deleting thingk: " + err);
@@ -97,6 +97,25 @@ router.delete("/:id",isLoggedIn, (req, res) => {
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     next();
+  } else {
+    res.send("You need to be logged in to do that!");
+  }
+}
+
+//Middleware to check thingk ownership
+function checkThingkOwnership (req, res, next) {
+  if(req.isAuthenticated()) {
+    Thingk.findById(req.params.id, (err, foundThingk) => {
+      if(err) {
+        console.log("Error finding thingk: " + err);
+      } else {
+        if(req.user._id.equals(foundThingk.author.id)) {
+          next();
+        } else {
+          res.send("You don't have authorization to do that!");
+        }
+      }
+    })
   } else {
     res.send("You need to be logged in to do that!");
   }

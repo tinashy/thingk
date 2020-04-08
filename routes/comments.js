@@ -51,6 +51,56 @@ router.post("/",isLoggedIn, (req, res) => {
   });
 });
 
+//Comment Edit Route
+router.get("/:comment_id/edit",checkCommentOwnership, (req, res) => {
+  Thingk.findById(req.params.id, (err, foundThingk) => {
+    if(err) {
+      console.log("Error finding thingk: " + err);
+    } else {
+      Comment.findById(req.params.comment_id, (err, foundComment) => {
+        if (err) {
+          console.log("Error finding comment: " + err);
+        } else {
+          res.render("comments/edit", {
+            comment: foundComment,
+            thingk: foundThingk
+          });
+        }
+      });
+    }
+  });
+});
+
+//Comment Update Route
+router.put("/:comment_id",checkCommentOwnership, (req, res) => {
+  Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
+    if(err) {
+      console.log("Error updating comment: " + err);
+    } else {
+      res.redirect("/thingks/" + req.params.id);
+    }
+  });
+});
+
+//Middleware to check Comment Ownership
+function checkCommentOwnership (req, res, next) {
+  if(req.isAuthenticated()) {
+    Comment.findById(req.params.comment_id, (err, foundComment) => {
+      if(err) {
+        console.log("Error finding comment: " + err);
+      } else {
+        if(req.user._id.equals(foundComment.author.id)) {
+          next();
+        } else {
+          res.send("You don't have authorization to do that");
+        }
+      }
+    });
+  } else {
+    res.send("You need to be logged in to do that");
+  }
+}
+
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     next();
