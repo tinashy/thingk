@@ -26,6 +26,35 @@ html {
   margin-top: 20px;
 }
 
+.nav-items {
+  list-style: none;
+  float: right;
+  margin-right: 12%;
+  margin-top: 2%;
+}
+
+.nav-items li {
+  display: inline-block;
+  padding: 10px;
+  font-size: 145%;
+  letter-spacing: 1px;
+}
+
+.nav-items li a:link,
+.nav-items li a:visited {
+  text-decoration: none;
+  color: #ff4444;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-items li a:active, 
+.nav-items li a:hover {
+  border-bottom: 2px solid #1d524c;
+  transition: border-bottom 0.2s;
+}
+
+
 /* ----------- HEADER ----------- */
 
 header {
