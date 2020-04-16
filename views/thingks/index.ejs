@@ -2,7 +2,7 @@
 
     <div class="container-fluid p-0">
         <div class="jumbotron">
-            <h1>Welcome To ThinGK</h1>
+            <h2>Welcome To ThinGK</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore minima animi quasi natus minus beatae
                 aliquam eligendi consectetur impedit pariatur!</p>
             <hr>
@@ -21,8 +21,8 @@
                     <h5 class="card-title"><%= thingk.name %></h5>
                     <p class="card-text"><%= thingk.desc.substr(0, 60) %>...</p>
                     <p class="card-text"><small class="text-muted">$<%= thingk.price %>.00/piece</small>
-                        &nbsp;<button class="btn btn-outline-success btn-sm"><a
-                                href="/thingks/<%= thingk.id %>">more</a></button> &nbsp;
+                        &nbsp;<a href="/thingks/<%= thingk.id %>"><button class="btn btn-outline-success btn-sm">more</button></a>
+                        &nbsp;
                         <button class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></button>
                     </p>
                 </div>
