@@ -9,8 +9,7 @@ let express = require("express"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     LocalStrategyMongoose = require("passport-local-mongoose"),
-    flash = require("connect-flash"),
-    port = 8080;
+    flash = require("connect-flash");
 
 let app = express();
 
@@ -18,11 +17,18 @@ let app = express();
 //seedDB();
 
 //connecting to mongodb
-mongoose.connect("mongodb://localhost:27017/thingk", {
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://dan:dan3%2321q@yelpclone-ipcpx.mongodb.net/thingk";
+const client = new MongoClient(uri, {
     useNewUrlParser: true,
-    useFindAndModify: false,
     useUnifiedTopology: true
 });
+client.connect(err => {
+    const collection = client.db("thingk").collection("devices");
+    // perform actions on the collection object
+    client.close();
+});
+
 
 //expecting files from the '/public' dir automatically
 app.use(express.static(__dirname + "/public"));
@@ -38,8 +44,8 @@ app.use(
 app.set("view engine", "ejs");
 app.use(flash());
 
-//---------- Express-session & Passport Setup ----------------
-app.use(require("express-session")({
+//---------- Cookie-session & Passport Setup ----------------
+app.use(require("cookie-session")({
     secret: "we all need a little validation :)",
     resave: false,
     saveUninitialized: false
@@ -69,7 +75,10 @@ app.use("/thingks",thingks);
 app.use("/thingks/:id/comments",comments);
 app.use(index);
 
-//Listening to routes on local server
-app.listen(port, () => console.log("SERVER STARTED ON PORT: " + port));
+//Listening to routes on heroku server
+
+app.listen(process.env.PORT || 3000, () => {
+    console.log("SERVER STARTED!!");
+});
 
 //next up Data Association
