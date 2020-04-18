@@ -17,16 +17,10 @@ let app = express();
 //seedDB();
 
 //connecting to mongodb
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://dan:dan3%2321q@yelpclone-ipcpx.mongodb.net/thingk";
-const client = new MongoClient(uri, {
+mongoose.connect("mongodb+srv://dan:dan3%2321q@yelpclone-ipcpx.mongodb.net/thingk", {
+    useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
-});
-client.connect(err => {
-    const collection = client.db("thingk").collection("devices");
-    // perform actions on the collection object
-    client.close();
 });
 
 
