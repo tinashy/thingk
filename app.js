@@ -74,5 +74,3 @@ app.use(index);
 app.listen(process.env.PORT || 3000, () => {
     console.log("SERVER STARTED!!");
 });
-
-//next up Data Association
