@@ -24,7 +24,7 @@
           </small>
 
           <!-- dynamically showing & hiding buttons depending on user authorization -->
-          <% if(currentUser && currentUser._id.equals(thingk.author.id)) { %>
+          <% if(currentUser && currentUser._id.equals(thingk.author.id) || currentUser && currentUser.isAdmin) { %>
           &nbsp;|&nbsp;<a href="/thingks/<%= thingk.id %>/edit">edit</a>
           
           &nbsp;|&nbsp;<a href="<%= thingk.externalUrl %>" target="_blank">go to source</a>
@@ -47,11 +47,11 @@
         <% thingk.comments.forEach((comment) => { %>
           <h6 class="card-title"><%= comment.author.username %> - <small><%= comment.text %></small></h6>
 
-          <% if(currentUser && currentUser._id.equals(comment.author.id)) { %>
+          <% if(currentUser && currentUser._id.equals(comment.author.id) || currentUser && currentUser.isAdmin) { %>
           <button class="btn btn-sm btn-warning">
             <a href="/thingks/<%= thingk.id %>/comments/<%= comment.id %>/edit">edit</a>
           </button>
-          <form style="display: inline;" action="/thingks/<%= thingk.id %>/comments/<%= comment.id %>?_method=DELETE">
+          <form style="display: inline;" action="/thingks/<%= thingk.id %>/comments/<%= comment.id %>?_method=DELETE" method="POST">
             <button class="btn btn-sm btn-danger">delete</button>
           </form>
           <% } %>

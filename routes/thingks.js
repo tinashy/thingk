@@ -110,7 +110,7 @@ function checkThingkOwnership (req, res, next) {
         req.flash("error", "Error finding thingk");
         res.redirect("back");
       } else {
-        if(req.user._id.equals(foundThingk.author.id)) {
+        if(req.user._id.equals(foundThingk.author.id) || req.user.isAdmin) {
           next();
         } else {
           req.flash("error", "You don't have authorization to do that :(");

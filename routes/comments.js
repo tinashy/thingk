@@ -98,7 +98,7 @@ function checkCommentOwnership (req, res, next) {
         req.flash("error", "Error finding comment");
         res.redirect("back");
       } else {
-        if(req.user._id.equals(foundComment.author.id)) {
+        if(req.user._id.equals(foundComment.author.id) || req.user.isAdmin) {
           next();
         } else {
           req.flash("error", "You don't have authorization to do that");
