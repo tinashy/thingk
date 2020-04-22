@@ -90,6 +90,16 @@ router.put("/:comment_id",checkCommentOwnership, (req, res) => {
   });
 });
 
+router.delete("/:comment_id",checkCommentOwnership, (req, res) => {
+  Comment.findByIdAndDelete(req.params.comment_id, (err, deletedComment) => {
+    if(err) {
+      console.log("ERROR ", err.message);
+    } else {
+      res.redirect("/thingks/" + req.params.id);
+    }
+  });
+});
+
 //Middleware to check Comment Ownership
 function checkCommentOwnership (req, res, next) {
   if(req.isAuthenticated()) {
