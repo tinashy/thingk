@@ -17,11 +17,11 @@ let app = express();
 //seedDB();
 
 //connecting to mongodb
-mongoose.connect("mongodb+srv://dan:dan3%2321q@yelpclone-ipcpx.mongodb.net/thingk", {
+mongoose.connect(process.env.DATABASEURL, {
     useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
-});
+}); 
 
 
 //expecting files from the '/public' dir automatically
@@ -71,6 +71,6 @@ app.use(index);
 
 //Listening to routes on heroku server
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3000, process.env.IP, () => {
     console.log("SERVER STARTED!!");
 });
