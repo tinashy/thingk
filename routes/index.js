@@ -16,9 +16,14 @@ router.get("/signup", (req, res) => {
 });
 
 router.post("/signup", (req, res) => {
-  User.register(new User({
-    username: req.body.username
-  }), req.body.password, (err, createdUser) => {
+
+  let newUser = new User({username: req.body.username});
+
+  if(req.body.adminCode === "secretCode123") {
+    newUser.isAdmin = true;
+  }
+  
+  User.register(newUser, req.body.password, (err, createdUser) => {
     if (err) {
       req.flash("error", err.message);
       res.redirect("/signup");

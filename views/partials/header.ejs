@@ -56,6 +56,10 @@
         </div>
     </nav>
 
+    <% if(currentUser && currentUser.isAdmin) { %>
+        <h2>you're an admin!</h2>
+    <% } %>
+
     <% if(success && success.length > 0) { %>
     <div class="alert alert-success" role="alert">
         <%= success %>
