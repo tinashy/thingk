@@ -17,7 +17,10 @@ let app = express();
 //seedDB();
 
 //connecting to mongodb
-mongoose.connect(process.env.DATABASEURL, {
+
+let url = process.env.DATABASEURL || "mongodb://localhost:27017/thingk";
+
+mongoose.connect(url, {
     useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
