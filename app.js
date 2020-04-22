@@ -74,10 +74,6 @@ app.use(index);
 
 //Listening to routes on heroku server
 
-// app.listen(process.env.PORT || 3000, process.env.IP, () => {
-//     console.log("SERVER STARTED!!");
-// });
-
-app.listen(8080, () => {
-    console.log("dev server started!");
+app.listen(process.env.PORT || 3000, process.env.IP, () => {
+    console.log("SERVER STARTED!!");
 });
