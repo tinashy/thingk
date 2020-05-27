@@ -18,6 +18,15 @@ html {
   margin: 0 auto;
 }
 
+h2 {
+  font-size: 160%;
+  font-weight: 400;
+}
+
+p {
+  font-weight: 300;
+}
+
 /* ------------- NAVIGATION ------------------ */
 
 
@@ -332,7 +341,11 @@ h1 {
 }
 
 /*  Index Styles */
-.index-text {
+.index-p {
   margin: 0 auto;
-  width: 48%;
+  width: 45%;
+}
+
+.card-title {
+  font-weight: 400;
 }
