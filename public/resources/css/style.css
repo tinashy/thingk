@@ -277,14 +277,21 @@ h1 {
 .fa-github:active,
 .fa-github:hover {
   color: #333;
+  background-color: #fff;
+  border: 0 solid transparent;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }
 
 .fa-linkedin:active,
-.fa-linkedin:hover {
+.fa-linkedin:hover,
+.fa-linkedin-in:active,
+.fa-linkedin-in:hover {
   color: #007bb5;
 }
-
-
 
 /* =========================== END ============================ */
 
@@ -364,4 +371,67 @@ h1 {
 
 .card-title {
   font-weight: 400;
+}
+
+/*=================================== 
+  FOOTER
+===================================== */
+
+footer {
+  margin: 0;
+  background-color: #2c3e50;
+  padding-top: 50px;
+  padding-bottom: 25px;
+}
+
+.footer-nav {
+  width: 65%;
+  margin: 0 auto;
+}
+
+.nav li {
+  padding: 10px;
+}
+
+.nav-links {
+  float: left;
+}
+
+.nav li a {
+  text-decoration: none;
+}
+
+.nav-social {
+  float: right;
+}
+
+.nav-links li a:link,
+.nav-links li a:visited {
+  color: rgb(184, 178, 178);
+}
+
+.nav-links li a:active, 
+.nav-links li a:hover {
+  color: #fff;
+  transition: color .2s;
+  -webkit-transition: color .2s;
+  -moz-transition: color .2s;
+  -ms-transition: color .2s;
+  -o-transition: color .2s;
+}
+
+.nav-social li a i {
+  font-size: 150%;
+  color: rgb(184, 178, 178);
+}
+
+.footer-p {
+  margin-top: 2%;
+  font-size: 110%;
+  color: rgb(184, 178, 178);
+}
+
+.footer-p p {
+  width: 90%;
+  margin-left: 5%;
 }
