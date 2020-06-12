@@ -1,14 +1,5 @@
 @media only screen and (max-width: 1365px) {
   
-  .card-title {
-    font-size: 120%;
-  }
-
-  .card img {
-    width: auto;
-    height: 150px;
-  }
-  
   .index-p {
     width: 100%;
   }
@@ -21,7 +12,7 @@
 }
 
 @media only screen and (max-width: 725px) {
-  
+
   .content h1 {
     font-weight: 300;
     font-size: 40px;
@@ -41,6 +32,16 @@
 }
 
 @media only screen and (max-width: 423px) {
+
+  .card-title {
+    font-size: 120%;
+  }
+
+  .card img {
+    width: auto;
+    height: 200px;
+  }
+
   .nav li {
     padding: 5px;
   }
